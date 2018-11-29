@@ -126,6 +126,13 @@ module.exports = function GulpParcel(...options)
                 this.emit('error', new PluginError(PLUGIN_NAME, "Build FAIL:" + file.path));
                 cb(null, file);
             }
+        })
+        .catch(error => {
+          if (isTmp) {
+            removeDirectory(options.outDir);
+          }
+          this.emit('error', new PluginError(PLUGIN_NAME, "Build FAIL:" + file.path));
+          cb(null, file);
         });
     });
 }
